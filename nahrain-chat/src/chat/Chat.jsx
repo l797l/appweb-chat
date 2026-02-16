@@ -208,7 +208,7 @@ export default function Chat() {
               >
                 <img
                   src={
-                    pathWeb+informationMyAccount.profileImg ||
+                   informationMyAccount.profileImg? pathWeb+informationMyAccount.profileImg :
                     ImgProfileIsEmpty
                   }
                 ></img>

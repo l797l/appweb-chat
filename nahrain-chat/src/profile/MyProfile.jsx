@@ -2,21 +2,14 @@ import "./style/MyProfile.css";
 import imgNoneProfile from "../chat/img/as.jpg";
 import { useEffect, useState } from "react";
 import EditProfile from "./EditProfile";
+import { pathWeb } from "../api/axios";
 export default function MyProfile(props) {
   const [showBoxLogOut, setShowBoxLogOut] = useState(false);
   const [showEditProfile, setShowEditProfile] = useState(false);
-  const [showImgProfile, setShowImgProfile] = useState(`https://localhost:7280${props.imgProfile}`);
+  const showImgProfile = props.imgProfile
 
-  useEffect(() => {
 
-    const check = () => {
-
-      if ("https://localhost:7280null" == showImgProfile) {
-        setShowImgProfile(null);
-      }
-    };
-    check();
-  }, [showImgProfile]);
+  
   useEffect(() => {
     const closeLogout = () => setShowBoxLogOut(false);
     window.addEventListener("click", closeLogout);
@@ -62,7 +55,7 @@ export default function MyProfile(props) {
           <div className="information-my-profile">
             <img
               src={
-                showImgProfile || imgNoneProfile
+                showImgProfile? pathWeb+showImgProfile : imgNoneProfile
               }
             />
             <h4>{props.firstName + " " + props.lastName}</h4>

@@ -8,7 +8,7 @@ export default function EditProfile(props) {
   const [firstName, setFirstname] = useState(props.firstName);
   const [lastName, setLastName] = useState(props.lastName);
   const [userName, setUserName] = useState(props.userName);
-  const [imgProfile, setImgProfile] = useState(pathWeb + props.imgProfile);
+  const [imgProfile, setImgProfile] = useState( props.imgProfile);
   const [preViewImgProfile, setPreViewImgProfile] = useState(null);
   const [updateToInfo, setUpdateToInfo] = useState(false);
 
@@ -44,7 +44,7 @@ export default function EditProfile(props) {
 
     try {
      await axios.put(
-        "https://localhost:7280/api/User/UpdateInformationProfile",
+        pathWeb+"api/User/UpdateInformationProfile",
         formData,
         {
           headers: {
@@ -57,14 +57,7 @@ export default function EditProfile(props) {
       console.error(error.response?.data);
     }
   };
-  useEffect(() => {
-    const check = () => {
-      if ("https://localhost:7280null" == imgProfile) {
-        setImgProfile(null);
-      }
-    };
-    check();
-  }, [imgProfile]);
+
 
   const updateImgProfile = (e) => {
     const file = e.target.files[0];
@@ -84,7 +77,7 @@ export default function EditProfile(props) {
         <p>Edit Profile</p>
       </div>
       <div className="img-edit-profile">
-        <img src={preViewImgProfile || imgProfile || imgNoneProfile} />
+        <img src={preViewImgProfile? preViewImgProfile : imgProfile? pathWeb+imgProfile : imgNoneProfile} />
         <label className="icon-edit-img" htmlFor="file-input">
           {" "}
           <i className="fa-regular fa-file-image "></i>
