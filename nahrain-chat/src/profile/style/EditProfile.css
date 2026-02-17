@@ -1,0 +1,162 @@
+.edit-profile {
+  min-width: 424px;
+  background-color: #212121;
+  height: 100vh;
+  padding: 0 20px;
+}
+
+.edit-profile .header-edit-profile {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  height: 56px;
+  padding: 20px 0;
+  gap: 25px;
+}
+
+.edit-profile .header-edit-profile i {
+  color: #8a8a8a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 50%;
+  height: 35px;
+  width: 35px;
+  font-size: 20px;
+}
+
+.edit-profile .header-edit-profile i:hover {
+  background-color: #8a8a8a5b;
+}
+
+.edit-profile .header-edit-profile p {
+  color: #ffffff;
+  font-size: 20px;
+}
+
+.edit-profile .img-edit-profile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+}
+
+.edit-profile .img-edit-profile img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  position: relative;
+}
+
+.edit-profile .img-edit-profile .icon-edit-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: #21212159;
+  position: absolute;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.img-edit-profile .icon-edit-img i {
+  font-size: 50px;
+  transition: all 0.5s ease;
+}
+.img-edit-profile .icon-edit-img:hover i {
+  font-size: 60px;
+}
+.img-edit-profile .icon-edit-img input[type="file"] {
+  display: none;
+}
+.edit-profile .list-input-edit {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+}
+.edit-profile .list-input-edit p {
+  color: #ffffff;
+  margin: -5px 0 0 20px;
+  color: #ffffff55;
+  background-color: #212121;
+  font-size: 14px;
+  padding: 0 5px;
+  z-index: 55;
+  position: absolute;
+  transition: all 0.5s ease;
+}
+
+.edit-profile .list-input-edit h4 {
+  margin: 6px;
+  margin-bottom: 12px;
+  color: rgba(135, 116, 225, 1);
+}
+
+.edit-profile .list-input-edit .isEmpty {
+  color: #ffffff;
+  margin: 17px 0 0 20px;
+  color: #ffffff55;
+  background-color: #212121;
+  font-size: 18px;
+  padding: 0 5px;
+  z-index: 55;
+  position: absolute;
+  transition: all 0.5s ease;
+}
+.edit-profile .list-input-edit input {
+  height: 54px;
+  width: 100%;
+  background-color: rgba(178, 34, 34, 0);
+  border-radius: 8px;
+  border: #ffffff14 solid 1px;
+  color: #ffffff;
+  padding-left: 20px;
+  font-size: 16px;
+}
+
+.list-input-edit .input-edit input:focus-within {
+  outline: none;
+  border: 2px solid rgba(135, 116, 225, 1);
+}
+.list-input-edit .input-edit input:hover {
+  outline: none;
+  border: 1px solid rgba(135, 116, 225, 1);
+}
+.list-input-edit .input-edit:focus-within p,
+.list-input-edit .input-edit:hover p {
+  color: rgba(135, 116, 225, 1);
+}
+.list-input-edit .input-edit:focus-within p {
+  font-size: 14px;
+  padding: 0 5px;
+  z-index: 55;
+  margin: -5px 0 0 20px;
+}
+
+.but-update {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: rgba(135, 116, 225, 1);
+  border: none;
+  position: fixed;
+  bottom: 50px;
+  left: 310px;
+  cursor: pointer;
+}
+.but-update:hover {
+  background-color: rgba(134, 116, 225, 0.591);
+}
+.but-update {
+    color: #ffffff;
+    font-size: 15px;
+}
+@media (max-width: 700px) {
+  .edit-profile {
+    width: 100%;
+  }
+}
