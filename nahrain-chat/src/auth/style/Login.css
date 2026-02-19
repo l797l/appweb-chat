@@ -1,0 +1,105 @@
+.Body-Login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #212121;
+  width: 100%;
+  gap: 3px;
+}
+
+.Body-Login input {
+  margin: 10px;
+  padding: 10px;
+  width: 250px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.register-link {
+  margin-top: 15px;
+  color: #007bff;
+  text-decoration: none;
+}
+.register-link:hover {
+  text-decoration: underline;
+}
+
+.edit-profile .list-input-edit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 550px;
+  width: 100%;
+
+  gap: 20px;
+}
+
+.Body-Login .box-input-body .isEmpty {
+  color: #ffffff;
+  margin: 27px 0px 0 20px;
+  color: #ffffff55;
+  background-color: #212121;
+  font-size: 18px;
+  padding: 0 15px;
+  z-index: 55;
+  position: absolute;
+  transition: all 0.5s ease;
+}
+.Body-Login .box-input-body input {
+  height: 54px;
+  background-color: rgba(178, 34, 34, 0);
+  border-radius: 8px;
+  border: #ffffff14 solid 1px;
+  color: #ffffff;
+  padding-left: 20px;
+  font-size: 16px;
+  min-width: 350px;
+}
+.Body-Login .box-input-body p {
+  color: #ffffff;
+  margin: 5px -5px 0 20px;
+  color: #ffffff55;
+  background-color: #212121;
+  font-size: 14px;
+  padding: 0 5px;
+  z-index: 55;
+  position: absolute;
+  transition: all 0.5s ease;
+}
+
+.Body-Login .box-input-body input:focus-within {
+  outline: none;
+  border: 2px solid rgba(135, 116, 225, 1);
+}
+.Body-Login .box-input-body input:hover {
+  outline: none;
+  border: 1px solid rgba(135, 116, 225, 1);
+}
+.Body-Login .box-input-body:focus-within p,
+.Body-Login .box-input-body:hover p {
+  color: rgba(135, 116, 225, 1);
+}
+.Body-Login .box-input-body:focus-within p {
+  font-size: 14px;
+  z-index: 55;
+  margin: 5px -5px 0 20px;
+}
+
+.Body-Login button {
+  padding: 10px 20px;
+  background-color: rgba(135, 116, 225, 1);
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  padding-left: 20px;
+  font-size: 16px;
+  min-width: 350px;
+  height: 54px;
+  border-radius: 8px;
+  border: #ffffff14 solid 1px;
+}
+.Body-Login button:hover {
+  background-color: rgba(135, 116, 225, 0.9);
+}
