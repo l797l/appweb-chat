@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL : 'http://chatofnahrain.runasp.net/api/',
+    baseURL : 'https://chatofnahrain.runasp.net/api/',
     headers: {
         'Content-Type': 'application/json'
     }
@@ -23,7 +23,7 @@ export default api;
 export const userId = localStorage.getItem('userId');
 export const token = localStorage.getItem("token");
 export const fullName = localStorage.getItem('fullName');
-export const pathWeb = 'http://chatofnahrain.runasp.net/'
+export const pathWeb = 'https://chatofnahrain.runasp.net/'
 
 
 
