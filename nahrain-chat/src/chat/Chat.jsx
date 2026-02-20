@@ -11,12 +11,10 @@ export default function Chat() {
   const [showAllChat, setShowAllChat] = useState([]);
   const [chatId, setChatId] = useState("");
   const [imgChat, setImgChat] = useState("");
-
   const [search, setSearch] = useState("");
   const [resultSearch, setResultSearch] = useState([]);
   const navigate = useNavigate();
   const [widthPage, setWidthPage] = useState(window.innerWidth);
-
   const [showMenuProfile, setShowMenuProfile] = useState(false);
   const [showMyProfile, setShowMyProfile] = useState(false);
   const [informationMyAccount, setInformationMyAccount] = useState([]);
@@ -32,6 +30,10 @@ export default function Chat() {
       console.error("Failed to play sound");
     });
   };
+
+ 
+
+          
 
   useEffect(() => {
     const connection = new SignalR.HubConnectionBuilder()
@@ -53,7 +55,9 @@ export default function Chat() {
             
             setShowAllChat(sorted);
             if ( localStorage.getItem("userId") != sorted[0].sendId) {
-              playNotificationSound();
+              if(sorted[0].numberMessagsNotRead > 0) {
+                playNotificationSound();
+              }
             }
           });
         })
@@ -63,6 +67,7 @@ export default function Chat() {
     }
 
     return () => {
+      connection.off("UpdateChat");
       if (connection.state === "Connected") connection.stop();
     };
   }, []);

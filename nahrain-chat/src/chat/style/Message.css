@@ -141,6 +141,7 @@ display: flex;
   word-wrap: break-word;
   word-break: break-word;
 }
+
 .box-message-other {
   display: flex;
   flex-direction: row;
@@ -179,6 +180,26 @@ display: flex;
 
 .nonImg {
   display: none;
+}
+
+.box-info-message{
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  gap: 2px;
+  height: 12px;
+  
+}
+
+.box-info-message i,
+.box-info-message p{
+  font-size: 10px;
+  color: #ffffff95;
+
+  
+}
+.box-info-message .icon-checkIsRead{
+  margin-right:-7px ;
 }
 
 

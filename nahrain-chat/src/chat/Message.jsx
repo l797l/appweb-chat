@@ -3,8 +3,7 @@ import api, { pathWeb, userId } from "../api/axios";
 import imgProfile from "./img/as.jpg";
 import * as SignalR from "@microsoft/signalr";
 import "./style/Message.css";
-import EmojiPicker from 'emoji-picker-react';
-
+import EmojiPicker from "emoji-picker-react";
 
 export default function Message(props) {
   const [messages, setMessages] = useState([]);
@@ -18,9 +17,10 @@ export default function Message(props) {
 
   useEffect(() => {
     const newConntection = new SignalR.HubConnectionBuilder()
-      .withUrl(pathWeb+"chatHub")
+      .withUrl(pathWeb + "chatHub")
       .withAutomaticReconnect()
       .build();
+
 
     setConnectionHub(newConntection);
 
@@ -38,24 +38,24 @@ export default function Message(props) {
     });
 
     return () => {
+      newConntection.off("ReceiveMessage");
       // eslint-disable-next-line react-hooks/exhaustive-deps
       connectionRef.current?.invoke("LeaveChat", props.id);
     };
   }, [props.id]);
 
+  
+
   const addEmojiToMessage = (Emoji) => {
-    setSendMessage((mes) => mes+Emoji.emoji)
+    setSendMessage((mes) => mes + Emoji.emoji);
   };
   useEffect(() => {
-    const closeMenu = () =>{  setContextMenu(null)}
+    const closeMenu = () => {
+      setContextMenu(null);
+    };
     window.addEventListener("click", closeMenu);
     return () => window.removeEventListener("click", closeMenu);
   }, []);
-
-  useEffect(() => {
-    api.put(`Chat/ReadMessage/${props.id}`)
-      .then()
-  },[messages])
 
   const showContextMenu = (e, messageId) => {
     e.preventDefault();
@@ -109,6 +109,23 @@ export default function Message(props) {
   }, [conecctionHub]);
 
   useEffect(() => {
+    if (conecctionHub) {
+      conecctionHub.on("ReadMessage", (chatId) => {
+        if (chatId === props.id) {
+          setMessages((prev) =>
+            prev.map((m) =>
+              m.userId === userId && !m.isRead ? { ...m, isRead: true } : m,
+            ),
+          );
+        }
+        console.log("تم تحديث الصحين زرقاء لحظياً!");
+      });
+
+      return () => conecctionHub.off("ReadMessage");
+    }
+  }, [conecctionHub, props.id]);
+
+  useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [messages, props.id]);
   const messageList = messages.map((message) => (
@@ -121,15 +138,27 @@ export default function Message(props) {
     >
       <img
         className={message.userId != userId ? "img-profile-message" : "nonImg"}
-        src={message.imgUser? pathWeb+message.imgUser   : imgProfile}
+        src={message.imgUser ? pathWeb + message.imgUser : imgProfile}
       />
-      <p
+      <div
         className={
           message.userId != userId ? "text-message-other" : "my-text-message"
         }
       >
         {message.text}
-      </p>
+        <div className="box-info-message">
+          <p className="editing-mess">Editing</p>
+          <p className="time-mess">27:55</p>
+          {message.userId == userId && (
+            <>
+              {message.isRead && (
+                <i className="fa-solid fa-check icon-checkIsRead"></i>
+              )}
+              <i className="fa-solid fa-check"></i>
+            </>
+          )}
+        </div>
+      </div>
     </div>
   ));
 
@@ -141,7 +170,7 @@ export default function Message(props) {
             className="fa-solid fa-arrow-left back-chats"
             onClick={() => props.onButtombackChat()}
           ></i>
-          <img src={props.img? pathWeb+props.img:imgProfile} />
+          <img src={props.img ? pathWeb + props.img : imgProfile} />
           <div className="box-title-header">
             <h4>{userName}</h4> <p>last seen recently</p>
           </div>
@@ -160,7 +189,13 @@ export default function Message(props) {
       </div>
       <div className="box-send-message">
         <div className="box-input">
-          <i className="fa-regular fa-face-smile icon-smail" onClick={(e) =>  {e.stopPropagation();  setShowMenuEmoji(!showMenuEmoji)}} ></i>
+          <i
+            className="fa-regular fa-face-smile icon-smail"
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowMenuEmoji(!showMenuEmoji);
+            }}
+          ></i>
           <input
             type="text"
             value={text}
@@ -204,7 +239,7 @@ export default function Message(props) {
 
       {showMenuEmoji && (
         <div className="box-emoji">
-          <EmojiPicker onEmojiClick={addEmojiToMessage} className="all-emoji"/>
+          <EmojiPicker onEmojiClick={addEmojiToMessage} className="all-emoji" />
         </div>
       )}
     </div>
