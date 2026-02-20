@@ -6,6 +6,7 @@ import ListMessage from "./Message";
 import { useNavigate } from "react-router-dom";
 import MyProfile from "../profile/MyProfile";
 import * as SignalR from "@microsoft/signalr";
+import voiceSendMessage from "./void/void-message.mp3";
 export default function Chat() {
   const [showAllChat, setShowAllChat] = useState([]);
   const [chatId, setChatId] = useState("");
@@ -25,31 +26,44 @@ export default function Chat() {
     if (!token) navigate("/login");
   }, [navigate]);
 
+  const playNotificationSound = () => {
+    const audio = new Audio(voiceSendMessage);
+    audio.play().catch(() => {
+      console.error("Failed to play sound");
+    });
+  };
+
   useEffect(() => {
     const connection = new SignalR.HubConnectionBuilder()
       .withUrl(pathWeb + "chatHub", {
         accessTokenFactory: () => localStorage.getItem("token"),
       })
       .withAutomaticReconnect()
-      .build();
 
-    connection
-      .start()
-      .then(() => {
-        console.log("Connected to SignalR hub");
-        connection.on("UpdateChat", (data) => {
-          const sorted = data.sort(
-            (a, b) => new Date(b.lastMessageTime) - new Date(a.lastMessageTime),
-          );
-          setShowAllChat(sorted);
+      .build();
+    if (connection.state === "Disconnected") {
+      connection
+        .start()
+        .then(() => {
+          connection.on("UpdateChat", (data) => {
+            const sorted = data.sort(
+              (a, b) =>
+                new Date(b.lastMessageTime) - new Date(a.lastMessageTime),
+            );
+            
+            setShowAllChat(sorted);
+            if ( localStorage.getItem("userId") != sorted[0].sendId) {
+              playNotificationSound();
+            }
+          });
+        })
+        .catch((error) => {
+          console.error("Error connecting to SignalR hub:", error);
         });
-      })
-      .catch((error) => {
-        console.error("Error connecting to SignalR hub:", error);
-      });
+    }
 
     return () => {
-      connection.stop();
+      if (connection.state === "Connected") connection.stop();
     };
   }, []);
   useEffect(() => {
@@ -97,8 +111,6 @@ export default function Chat() {
       window.removeEventListener("resize", updateWidth);
     };
   });
-
-  
 
   const formatTimeAgo = (dateString) => {
     if (!dateString) return "";
@@ -158,15 +170,17 @@ export default function Chat() {
       <div className="box-information">
         <div className="box-chat-text">
           <h3>{chat.userOther[0].fullName}</h3>
-          <p>
-            Ali:<span> {chat.lastMessage}</span>{" "}
+          <p >
+            {localStorage.getItem("userId") == chat.sendId ? "Me" : chat.nameSend}:<span> {chat.lastMessage}</span>{" "}
           </p>
         </div>
         <div className="box-time-count">
           <h5>{formatTimeAgo(chat.lastMessageTime)}</h5>
           <p
             className={
-             chatId != chat.id && chat.numberMessagsNotRead > 0? "count-not-read" : "read-all"
+              chatId != chat.id && chat.numberMessagsNotRead > 0
+                ? "count-not-read"
+                : "read-all"
             }
           >
             {chat.numberMessagsNotRead}
