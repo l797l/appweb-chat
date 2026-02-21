@@ -110,6 +110,7 @@
 .edit-profile .list-input-edit input {
   height: 54px;
   width: 100%;
+  min-width: 300px;
   background-color: rgba(178, 34, 34, 0);
   border-radius: 8px;
   border: #ffffff14 solid 1px;

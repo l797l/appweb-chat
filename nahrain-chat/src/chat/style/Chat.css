@@ -30,6 +30,7 @@
   background-color: #2b2b2b;
   height: 100vh;
   min-width: 424px;
+
   padding: 10px;
   border: #000000 solid 1px;
 }
@@ -104,6 +105,9 @@ background-color: #ffffff00;
   align-items: start;
   justify-content: center;
   gap: 3px;
+  min-width: 0;
+  flex: 1;
+
 }
 
 .Box-chat .box-chat-text h3 {
@@ -114,10 +118,15 @@ background-color: #ffffff00;
 
 .box-chat-text p {
   color: #ffffff;
+  white-space: nowrap;
+  text-overflow: ellipsis;  
+  overflow: hidden;
+  
 }
 
 .box-chat-text p span {
   color: #aaaaaa;
+  
 }
 
 .Box-chat .box-time-count {

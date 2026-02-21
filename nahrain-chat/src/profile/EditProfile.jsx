@@ -18,7 +18,7 @@ export default function EditProfile(props) {
         firstName != props.firstName ||
         lastName != props.lastName ||
         userName != props.userName ||
-        imgProfile != pathWeb+props.imgProfile
+        imgProfile != pathWeb+props.imgProfile && imgProfile != null
       ) {
         setUpdateToInfo(true);
       } else {

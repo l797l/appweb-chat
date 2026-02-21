@@ -21,7 +21,6 @@ export default function Message(props) {
       .withAutomaticReconnect()
       .build();
 
-
     setConnectionHub(newConntection);
 
     newConntection.start().then(() => {
@@ -43,8 +42,6 @@ export default function Message(props) {
       connectionRef.current?.invoke("LeaveChat", props.id);
     };
   }, [props.id]);
-
-  
 
   const addEmojiToMessage = (Emoji) => {
     setSendMessage((mes) => mes + Emoji.emoji);
@@ -118,12 +115,27 @@ export default function Message(props) {
             ),
           );
         }
-        console.log("تم تحديث الصحين زرقاء لحظياً!");
       });
 
       return () => conecctionHub.off("ReadMessage");
     }
   }, [conecctionHub, props.id]);
+
+  useEffect(() => {
+    if (messages[messages.length - 1]?.userId !== userId) {
+      api.put(`Chat/ReadMessage/${props.id}`).then();
+    }
+  }, [messages]);
+
+  const TimeHour = (time) => {
+    if (!time) return "";
+    const date = new Date(time.endsWith("Z") ? time : time + "Z");
+
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+
+    return `${hours}:${minutes}`;
+  };
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
@@ -147,8 +159,8 @@ export default function Message(props) {
       >
         {message.text}
         <div className="box-info-message">
-          <p className="editing-mess">Editing</p>
-          <p className="time-mess">27:55</p>
+          {false && <p className="editing-mess">Editing</p>}
+          <p className="time-mess">{TimeHour(message.messageAt)}</p>
           {message.userId == userId && (
             <>
               {message.isRead && (
