@@ -57,7 +57,24 @@
   font-size: 21px;
   color: #ffffff;
 }
-.box-img-text-header .box-title-header p {
+.box-img-text-header .box-title-header .typing {
+  font-size: 13px;
+  color: #8774e1;
+  padding-right: 5px;
+
+}
+.box-title-header .typing span{
+  animation: blink 1s infinite;
+    font-size: 13px;
+    gap: 7px;
+
+}
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+.box-img-text-header .box-title-header .now {
   font-size: 13px;
   color: #b2b0b0c6;
 }

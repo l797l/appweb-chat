@@ -14,6 +14,7 @@ export default function Message(props) {
   const [contextMenu, setContextMenu] = useState(null);
   const [conecctionHub, setConnectionHub] = useState(null);
   const [showMenuEmoji, setShowMenuEmoji] = useState(false);
+  const [isWriting, setIsWriting] = useState(false);
 
   useEffect(() => {
     const newConntection = new SignalR.HubConnectionBuilder()
@@ -42,6 +43,31 @@ export default function Message(props) {
       connectionRef.current?.invoke("LeaveChat", props.id);
     };
   }, [props.id]);
+
+  useEffect(()=>{
+    if(!conecctionHub) return;
+    conecctionHub.on("WrtingNow",(id)=>{
+      if(id != userId)
+      setIsWriting(true)
+    })
+    conecctionHub.on("StopWrtingNow",(id)=>{
+      if(id != userId)
+      setIsWriting(false)
+    })
+    return()=>{
+      conecctionHub.off("WrtingNow")
+      conecctionHub.off("StopWrtingNow")
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[conecctionHub])
+
+  const changeWriteNow =()=>{
+    conecctionHub.invoke("sendWritingNow",props.id,userId)
+  } 
+    const changeStopWriteNow =()=>{
+    conecctionHub.invoke("sendStopWritingNow",props.id,userId)
+  } 
+
 
   const addEmojiToMessage = (Emoji) => {
     setSendMessage((mes) => mes + Emoji.emoji);
@@ -125,7 +151,7 @@ export default function Message(props) {
     if (messages[messages.length - 1]?.userId !== userId) {
       api.put(`Chat/ReadMessage/${props.id}`).then();
     }
-  }, [messages]);
+  }, [messages.length]);
 
   const TimeHour = (time) => {
     if (!time) return "";
@@ -184,7 +210,7 @@ export default function Message(props) {
           ></i>
           <img src={props.img ? pathWeb + props.img : imgProfile} />
           <div className="box-title-header">
-            <h4>{userName}</h4> <p>last seen recently</p>
+            <h4>{userName}</h4> { isWriting? <p className="typing">Typing<span>...</span></p>:<p className="now">last seen recently</p>}
           </div>
         </div>
         <div className="box-icon-header">
@@ -198,6 +224,7 @@ export default function Message(props) {
         <div ref={scrollRef} className="message-body">
           {messageList}
         </div>
+      
       </div>
       <div className="box-send-message">
         <div className="box-input">
@@ -212,7 +239,8 @@ export default function Message(props) {
             type="text"
             value={text}
             placeholder="Message"
-            onChange={(e) => setSendMessage(e.target.value)}
+            onChange={(e) => {setSendMessage(e.target.value), changeWriteNow()}}
+            onBlur={()=>changeStopWriteNow()}
             onKeyPress={(e) => e.key === "Enter" && addMessage(props.id)}
           />
           <i className="fa-solid fa-link icon-link"></i>
