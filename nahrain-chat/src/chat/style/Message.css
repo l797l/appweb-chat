@@ -67,6 +67,7 @@
   animation: blink 1s infinite;
     font-size: 13px;
     gap: 7px;
+    font-weight: 900;
 
 }
 @keyframes blink {
