@@ -22,16 +22,12 @@ export default function App() {
   }, []);
   return (
     <div className="body">
-      <BrowserRouter>
-        <Routes>
           <Route path="/" element={<Login />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="Chat" element={tokenCorrect ? <Chat /> : <Login />} />
           <Route path="login" element={<Login />} />
           <Route path="*" element={<Login />} />
-        </Routes>
-      </BrowserRouter>
     </div>
   );
 }
