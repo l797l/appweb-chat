@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import {  Route, Routes } from "react-router-dom";
 import Login from "./auth/Login.jsx";
 import Register from "./auth/Register.jsx";
 import Chat from "./chat/Chat.jsx";
@@ -22,7 +22,6 @@ export default function App() {
   }, []);
   return (
     <div className="body">
-      <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="login" element={<Login />} />
@@ -31,7 +30,6 @@ export default function App() {
           <Route path="login" element={<Login />} />
           <Route path="*" element={<Login />} />
         </Routes>
-      </BrowserRouter>
     </div>
   );
 }
