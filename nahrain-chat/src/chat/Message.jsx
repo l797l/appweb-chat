@@ -36,6 +36,7 @@ export default function Message(props) {
         return [...prev, message];
       });
     });
+    
 
     return () => {
       newConntection.off("ReceiveMessage");
@@ -149,7 +150,7 @@ export default function Message(props) {
 
   useEffect(() => {
     if (messages[messages.length - 1]?.userId !== userId) {
-      api.put(`Chat/ReadMessage/${props.id}`).then();
+      api.post(`Chat/ReadMessage/${props.id}`).then();
     }
   }, [messages.length]);
 

@@ -159,7 +159,7 @@ export default function Chat() {
       onClick={() => {
         setChatId(chat.id);
         setImgChat(chat.userOther[0].imgChat);
-        api.put(`Chat/ReadMessage/${chat.id}`).then();
+        api.post(`Chat/ReadMessage/${chat.id}`).then();
       }}
       key={chat.id}
       className={chatId == chat.id ? "Box-chat active" : "Box-chat"}
