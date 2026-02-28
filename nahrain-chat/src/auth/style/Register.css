@@ -1,8 +1,12 @@
+
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: Arial, sans-serif;
+}
+a {
+  text-decoration: none;
 }
 
 .Body-Register {
@@ -12,27 +16,62 @@
   height: 100vh;
   background-color: #f0f0f0;
   flex-direction: column;
+    background-color: #212121;
+    gap: 7px ;
+
 }
 
-.Body-Register input {
-  margin: 10px;
-  padding: 10px;
-  width: 250px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+.Body-Register  input {
+    height: 54px;
+  background-color: rgba(178, 34, 34, 0);
+  border-radius: 8px;
+  border: #ffffff14 solid 1px;
+  color: #ffffff;
+  padding-left: 20px;
+  font-size: 16px;
+  min-width: 350px;
+  margin-bottom: 5px;
 }
 
-.register-button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
+.Body-Register .box-input-body p {
+  color: #ffffff;
+  margin: -5px -2px 0 20px;
+  color: #ffffff55;
+  background-color: #212121;
+  font-size: 14px;
+  padding: 0 5px;
+  z-index: 55;
+  position: absolute;
+  transition: all 0.5s ease;
+}
+.Body-Register .box-input-body .isEmpty {
+  color: #ffffff;
+  margin: 18px 0px 0 10px;
+  color: #ffffff55;
+  background-color: #212121;
+  font-size: 18px;
+  padding: 0 15px;
+  z-index: 55;
+  position: absolute;
+  transition: all 0.5s ease;
 }
 
-.register-button:hover {
-  background-color: #0056b3;
+.Body-Register.box-input-body input:focus-within {
+  outline: none;
+  border: 2px solid rgba(135, 116, 225, 1);
+}
+.Body-Register .box-input-body input:hover {
+  outline: none;
+  border: 1px solid rgba(135, 116, 225, 1);
+}
+.Body-Register .box-input-body:focus-within p,
+.Body-Register .box-input-body:hover p {
+  color: rgba(135, 116, 225, 1);
+}
+.Body-Register .box-input-body:focus-within p {
+  font-size: 14px;
+  z-index: 55;
+  margin: -5px -2px 0 20px;
 }
 
 .message-error {
@@ -40,11 +79,28 @@
   margin: 10px 0;
   font-size: 14px;
 }
-.login-link {
-  margin-top: 15px;
-  color: #28a745;
-  text-decoration: none;
+
+.Body-Register button {
+  padding: 10px 20px;
+  background-color: rgba(135, 116, 225, 1);
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  padding-left: 20px;
+  font-size: 16px;
+  min-width: 350px;
+  height: 54px;
+  border-radius: 8px;
+  border: #ffffff14 solid 1px;
 }
-.login-link:hover {
-  text-decoration: underline;
+.Body-Register button:hover {
+  background-color: rgba(135, 116, 225, 0.9);
+}
+
+.Body-Register .login-link{
+  margin-top: 15px;
+color: rgba(135, 116, 225, 0.9);
+  font-size: 14px;
+  transition: color 0.3s ease;
+  font-size: 17px;
 }

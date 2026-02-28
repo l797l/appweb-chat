@@ -57,36 +57,46 @@ export default function Register() {
 
   return (
     <div className="Body-Register">
-      <input
-        type="FirstName"
-        value={firstName}
-        onChange={(e) => setFirstName(e.target.value)}
-        placeholder="Enter first Name"
-      />
+       <div className="box-input-body">
+          <p className={firstName ? "" : "isEmpty"}>First Name</p>
+          <input
+          type="FirstName"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+         />
+      </div>
+      <div className="box-input-body">
+        <p className={lastName ? "" : "isEmpty"}>Last Name</p>
       <input
         type="LastName"
         value={lastName}
         onChange={(e) => setLastName(e.target.value)}
-        placeholder="Enter last Name"
       />
+      </div>
+      <div className="box-input-body">
+        <p className={UserName ? "" : "isEmpty"}>User Name</p>
       <input
         type="UserName"
         value={UserName}
         onChange={(e) => setUserName(e.target.value)}
-        placeholder="Enter user Name"
       />
+      </div>
+      <div className="box-input-body">
+        <p className={email ? "" : "isEmpty"}>Email</p>
       <input
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        placeholder="Enter email"
       />
+      </div>
+      <div className="box-input-body">
+        <p className={password ? "" : "isEmpty"}>Password</p>
       <input
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        placeholder="Enter password"
       />
+      </div>
       <p className="message-error">{errorMessage}</p>
       <button className="register-button" onClick={handleRegister}>
         Register
