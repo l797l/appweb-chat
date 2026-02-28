@@ -87,6 +87,12 @@
   margin: 5px -5px 0 20px;
 }
 
+.message-error {
+  color: #ff4d4d;
+  margin: 10px 0;
+  font-size: 14px;
+}
+
 .Body-Login button {
   padding: 10px 20px;
   background-color: rgba(135, 116, 225, 1);

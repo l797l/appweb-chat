@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import "./style/Register.css";
 
+
 export default function Register() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -14,6 +15,7 @@ export default function Register() {
 
   async function handleRegister() {
     try {
+      setErrorMessage("");
       const response = await api.post("User/Register", {
         firstName,
         lastName,
@@ -27,8 +29,9 @@ export default function Register() {
         setErrorMessage("Registration failed. Please try again.");
       }
     } catch (error) {
+      const serverError = error.response?.data;
       setErrorMessage(
-        error.response?.data?.message ||
+         serverError ||
           "An error occurred during registration. Please try again.",
       );
     }
@@ -66,7 +69,7 @@ export default function Register() {
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Enter password"
       />
-      <p className="errorMessage">{errorMessage}</p>
+      <p className="message-error">{errorMessage}</p>
       <button className="register-button" onClick={handleRegister}>
         Register
       </button>

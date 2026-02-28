@@ -13,10 +13,12 @@ export default function App() {
       () =>setTokenCorrect(false);
       return
     }
+    
     api
       .get("User/CheckToken")
       .then(() => setTokenCorrect(true))
       .catch(() => {
+        console.error("Token validation failed. Redirecting to login.");
         setTokenCorrect(false);
       });
   }, []);

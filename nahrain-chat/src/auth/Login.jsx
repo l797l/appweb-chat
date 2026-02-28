@@ -23,7 +23,7 @@ export default function Login() {
         setErrorMessage(response.data);
       }
     } catch (error) {
-      setErrorMessage(error.response.data);
+      setErrorMessage(error.response?.data);
     }
   };
 
@@ -47,7 +47,7 @@ export default function Login() {
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
-      <p>{errorMessage}</p>
+      <p className="message-error">{errorMessage}</p>
       <button onClick={handleLogin}>Login</button>
       <Link className="register-link" to="/Register">
         Register
