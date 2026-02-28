@@ -14,6 +14,24 @@ export default function Register() {
   const navigate = useNavigate();
 
   async function handleRegister() {
+
+    if (!firstName || !lastName || !UserName || !email || !password) {
+      setErrorMessage("Please fill in all fields.");
+      return;
+    }
+    if (password.length < 6) {
+      setErrorMessage("Password must be at least 6 characters long.");
+      return;
+    }
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      setErrorMessage("Please enter a valid email address.");
+      return;
+    }
+    if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(password)) {
+      setErrorMessage("Password must contain at least one uppercase letter, one lowercase letter, and one digit.");
+      return;
+    }
+
     try {
       setErrorMessage("");
       const response = await api.post("User/Register", {

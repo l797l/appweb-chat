@@ -35,9 +35,10 @@
   background-color: #0056b3;
 }
 
-.error-message {
-  color: red;
-  margin-top: 10px;
+.message-error {
+  color: #ff4d4d;
+  margin: 10px 0;
+  font-size: 14px;
 }
 .login-link {
   margin-top: 15px;

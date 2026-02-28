@@ -18,7 +18,6 @@ export default function App() {
       .get("User/CheckToken")
       .then(() => setTokenCorrect(true))
       .catch(() => {
-        console.error("Token validation failed. Redirecting to login.");
         setTokenCorrect(false);
       });
   }, []);
