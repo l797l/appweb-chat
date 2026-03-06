@@ -1,11 +1,17 @@
-.my-profile {
-  min-width: 424px;
-  background-color: #212121;
-  height: 100vh;
-  padding: 0 20px;
+.body-your-profile{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    max-width: 326px;
+    flex-direction: column;
+    background-color: #2b2b2b;
+    border-left: 1px solid black;
+    padding: 5px 20px;
 }
 
-.my-profile .header-profile {
+
+
+.body-your-profile .header-profile {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -13,14 +19,14 @@
   padding: 20px 0;
 }
 
-.my-profile .header-profile div {
+.body-your-profile .header-profile div {
   display: flex;
   flex-direction: row;
   gap: 25px;
   align-items: center;
 }
 
-.my-profile .header-profile i {
+.body-your-profile .header-profile i {
   color: #8a8a8a;
   display: flex;
   align-items: center;
@@ -32,11 +38,11 @@
   font-size: 20px;
 }
 
-.my-profile .header-profile i:hover {
+.body-your-profile .header-profile i:hover {
   background-color: #8a8a8a5b;
 }
 
-.my-profile .header-profile p {
+.body-your-profile .header-profile p {
   color: #ffffff;
   font-size: 20px;
 }
@@ -102,7 +108,32 @@
 .box-icon-information .title-information p {
   color: #ffffff84;
 }
+.box-btn-add-story-my-profile {
+  display: flex;
+  justify-content: end;
+  margin: -20px 5px;
+}
 
+.box-btn-add-story-my-profile .add-story-my-profile {
+  height: 54px;
+  width: 54px;
+  border-radius: 50%;
+  background-color: rgba(135, 116, 225, 1);
+  border: none;
+  direction: rtl;
+  z-index: 99;
+  cursor: pointer;
+}
+
+.box-btn-add-story-my-profile .add-story-my-profile i {
+  font-size: 30px;
+
+  color: #ffffff;
+}
+
+.box-btn-add-story-my-profile .add-story-my-profile:hover {
+  background-color: rgb(124, 108, 209);
+}
 
 .log-out {
   display: flex;
@@ -125,9 +156,12 @@
   color: #ffffff;
 }
 
-@media (max-width: 700px) {
-  .my-profile {
+
+@media (max-width:780px){
+  .body-your-profile{
+ 
     width: 100%;
-    min-width: 0;
+    max-width: none;
+    height: 100vh;
   }
 }

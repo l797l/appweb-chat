@@ -4,6 +4,7 @@ import imgProfile from "./img/as.jpg";
 import * as SignalR from "@microsoft/signalr";
 import "./style/Message.css";
 import EmojiPicker from "emoji-picker-react";
+import YourProfile from "../profile/YourProfile";
 
 export default function Message(props) {
   const [messages, setMessages] = useState([]);
@@ -15,6 +16,8 @@ export default function Message(props) {
   const [conecctionHub, setConnectionHub] = useState(null);
   const [showMenuEmoji, setShowMenuEmoji] = useState(false);
   const [isWriting, setIsWriting] = useState(false);
+  const [showYourProfile, setShowYourProfile] = useState(false);
+  const [widthPage, setWidthPage] = useState(window.innerWidth);
 
   useEffect(() => {
     const newConntection = new SignalR.HubConnectionBuilder()
@@ -36,7 +39,6 @@ export default function Message(props) {
         return [...prev, message];
       });
     });
-    
 
     return () => {
       newConntection.off("ReceiveMessage");
@@ -45,30 +47,27 @@ export default function Message(props) {
     };
   }, [props.id]);
 
-  useEffect(()=>{
-    if(!conecctionHub) return;
-    conecctionHub.on("WrtingNow",(id)=>{
-      if(id != userId)
-      setIsWriting(true)
-    })
-    conecctionHub.on("StopWrtingNow",(id)=>{
-      if(id != userId)
-      setIsWriting(false)
-    })
-    return()=>{
-      conecctionHub.off("WrtingNow")
-      conecctionHub.off("StopWrtingNow")
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[conecctionHub])
+  useEffect(() => {
+    if (!conecctionHub) return;
+    conecctionHub.on("WrtingNow", (id) => {
+      if (id != userId) setIsWriting(true);
+    });
+    conecctionHub.on("StopWrtingNow", (id) => {
+      if (id != userId) setIsWriting(false);
+    });
+    return () => {
+      conecctionHub.off("WrtingNow");
+      conecctionHub.off("StopWrtingNow");
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [conecctionHub]);
 
-  const changeWriteNow =()=>{
-    conecctionHub.invoke("sendWritingNow",props.id,userId)
-  } 
-    const changeStopWriteNow =()=>{
-    conecctionHub.invoke("sendStopWritingNow",props.id,userId)
-  } 
-
+  const changeWriteNow = () => {
+    conecctionHub.invoke("sendWritingNow", props.id, userId);
+  };
+  const changeStopWriteNow = () => {
+    conecctionHub.invoke("sendStopWritingNow", props.id, userId);
+  };
 
   const addEmojiToMessage = (Emoji) => {
     setSendMessage((mes) => mes + Emoji.emoji);
@@ -80,6 +79,16 @@ export default function Message(props) {
     window.addEventListener("click", closeMenu);
     return () => window.removeEventListener("click", closeMenu);
   }, []);
+
+   useEffect(() => {
+    const updateWidth = () => setWidthPage(window.innerWidth);
+
+    window.addEventListener("resize", updateWidth);
+
+    return () => {
+      window.removeEventListener("resize", updateWidth);
+    };
+  });
 
   const showContextMenu = (e, messageId) => {
     e.preventDefault();
@@ -202,87 +211,108 @@ export default function Message(props) {
   ));
 
   return (
-    <div className="in-chat">
-      <div className="header-chat context">
-        <div className="box-img-text-header">
-          <i
-            className="fa-solid fa-arrow-left back-chats"
-            onClick={() => props.onButtombackChat()}
-          ></i>
-          <img src={props.img ? pathWeb + props.img : imgProfile} />
-          <div className="box-title-header">
-            <h4>{userName}</h4> { isWriting? <p className="typing">Typing<span>...</span></p>:<p className="now">last seen recently</p>}
-          </div>
-        </div>
-        <div className="box-icon-header">
-          <i className="fa-solid fa-phone icon-ph"></i>
-          <i className="fa-solid fa-magnifying-glass icon-se"></i>
-          <i className="fa-solid fa-ellipsis-vertical"></i>
-        </div>
-      </div>
-      <div className="message-list">
-        {" "}
-        <div ref={scrollRef} className="message-body">
-          {messageList}
-        </div>
-      
-      </div>
-      <div className="box-send-message">
-        <div className="box-input">
-          <i
-            className="fa-regular fa-face-smile icon-smail"
-            onClick={(e) => {
-              e.stopPropagation();
-              setShowMenuEmoji(!showMenuEmoji);
-            }}
-          ></i>
-          <input
-            type="text"
-            value={text}
-            placeholder="Message"
-            onChange={(e) => {setSendMessage(e.target.value), changeWriteNow()}}
-            onBlur={()=>changeStopWriteNow()}
-            onKeyPress={(e) => e.key === "Enter" && addMessage(props.id)}
-          />
-          <i className="fa-solid fa-link icon-link"></i>
-        </div>
-        <button onClick={() => addMessage(props.id)}>
-          <i className="fa-solid fa-paper-plane fa-rotate-by fa-xs"></i>
-        </button>
-      </div>
-      {contextMenu && (
-        <div
-          className="menu-tools-message"
-          style={{
-            top: contextMenu.y,
-            left: contextMenu.x,
-            position: "fixed",
-          }}
-        >
-          <div>
-            <i className="fa-solid fa-reply"></i>
-            <p>Reply</p>
-          </div>
-          <div>
-            <i className="fa-solid fa-pen"></i>
-            <p>Edit</p>
-          </div>
-          <div
-            className="but-delete-message"
-            onClick={() => deleteMessage(contextMenu.messageId)}
-          >
-            {" "}
-            <i className="fa-solid fa-trash-arrow-up"></i>
-            <p>Delete</p>
-          </div>
-        </div>
-      )}
+    <div className="change-message">
 
-      {showMenuEmoji && (
-        <div className="box-emoji">
-          <EmojiPicker onEmojiClick={addEmojiToMessage} className="all-emoji" />
+{!( widthPage < 600 && showYourProfile)&&
+      <div className="in-chat">
+        <div className="header-chat context">
+          <div
+            className="box-img-text-header"
+            onClick={() => setShowYourProfile(true)}
+          >
+            <i
+              className="fa-solid fa-arrow-left back-chats"
+              onClick={() => props.onButtombackChat()}
+            ></i>
+            <img src={props.img ? pathWeb + props.img : imgProfile} />
+            <div className="box-title-header">
+              <h4>{userName}</h4>{" "}
+              {isWriting ? (
+                <p className="typing">
+                  Typing<span>...</span>
+                </p>
+              ) : (
+                <p className="now">last seen recently</p>
+              )}
+            </div>
+          </div>
+          <div className="box-icon-header">
+            <i className="fa-solid fa-phone icon-ph"></i>
+            <i className="fa-solid fa-magnifying-glass icon-se"></i>
+            <i className="fa-solid fa-ellipsis-vertical"></i>
+          </div>
         </div>
-      )}
+        <div className="message-list">
+          {" "}
+          <div ref={scrollRef} className="message-body">
+            {messageList}
+          </div>
+        </div>
+        <div className="box-send-message">
+          <div className="box-input">
+            <i
+              className="fa-regular fa-face-smile icon-smail"
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowMenuEmoji(!showMenuEmoji);
+              }}
+            ></i>
+            <input
+              type="text"
+              value={text}
+              placeholder="Message"
+              onChange={(e) => {
+                (setSendMessage(e.target.value), changeWriteNow());
+              }}
+              onBlur={() => changeStopWriteNow()}
+              onKeyPress={(e) => e.key === "Enter" && addMessage(props.id)}
+            />
+            <i className="fa-solid fa-link icon-link"></i>
+          </div>
+          <button onClick={() => addMessage(props.id)}>
+            <i className="fa-solid fa-paper-plane fa-rotate-by fa-xs"></i>
+          </button>
+        </div>
+        {contextMenu && (
+          <div
+            className="menu-tools-message"
+            style={{
+              top: contextMenu.y,
+              left: contextMenu.x,
+              position: "fixed",
+            }}
+          >
+            <div>
+              <i className="fa-solid fa-reply"></i>
+              <p>Reply</p>
+            </div>
+            <div>
+              <i className="fa-solid fa-pen"></i>
+              <p>Edit</p>
+            </div>
+            <div
+              className="but-delete-message"
+              onClick={() => deleteMessage(contextMenu.messageId)}
+            >
+              {" "}
+              <i className="fa-solid fa-trash-arrow-up"></i>
+              <p>Delete</p>
+            </div>
+          </div>
+        )}
+
+        {showMenuEmoji && (
+          <div className="box-emoji">
+            <EmojiPicker
+              onEmojiClick={addEmojiToMessage}
+              className="all-emoji"
+            />
+          </div>
+        )}
+      </div>
+      }
+            {showYourProfile && <YourProfile deleteYourProfile={setShowYourProfile} chatId={props.id} />}
+
     </div>
   );
 }
